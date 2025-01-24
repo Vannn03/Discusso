@@ -1,5 +1,6 @@
 export const editUser = async (req, res) => {
-    const { username, email, bio } = req.body;
+    const { username, bio } = req.body;
+    const { email } = req.user;
 
     if (!username) {
         return res.status(400).json({ error: "Invalid username!" });
