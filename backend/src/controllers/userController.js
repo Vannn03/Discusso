@@ -1,6 +1,7 @@
 export const editUser = async (req, res) => {
     const { username, bio } = req.body;
     const { email } = req.user;
+    const profilePicture = req.file ? req.file.path : null;
 
     if (!username) {
         return res.status(400).json({ error: "Invalid username!" });
@@ -14,6 +15,7 @@ export const editUser = async (req, res) => {
             data: {
                 username: username,
                 bio: bio,
+                ...(profilePicture && { profile_picture: profilePicture }),
             },
         });
 
@@ -23,27 +25,6 @@ export const editUser = async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ message: "Failed to update user!" });
-    }
-};
-
-export const editProfilePicture = async (req, res) => {
-    const { email } = req.body;
-    const profilePicture = req.file ? req.file.path : null;
-
-    try {
-        const updateProfilePicture = await prisma.user.update({
-            where: { email: email },
-            data: {
-                profile_picture: profilePicture,
-            },
-        });
-
-        res.status(200).json({
-            message: "Update profile picture successful!",
-            updateProfilePicture,
-        });
-    } catch (error) {
-        res.status(500).json({ message: "Failed to update profile picture!" });
     }
 };
 

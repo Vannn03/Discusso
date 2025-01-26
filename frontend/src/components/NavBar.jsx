@@ -58,7 +58,9 @@ const NavBar = ({ isAuthorized }) => {
                                     src={
                                         !userData?.profile_picture
                                             ? "/no-profile-picture.webp"
-                                            : userData.profile_picture
+                                            : `${
+                                                  import.meta.env.VITE_API_URL
+                                              }/${userData.profile_picture}`
                                     }
                                     roundedCircle
                                     width="50"

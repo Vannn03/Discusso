@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
+import Image from "react-bootstrap/Image";
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
@@ -44,19 +45,31 @@ const Profile = () => {
         reset({
             username: userData?.username,
             bio: userData?.bio,
+            profilePicture: null,
         }); // Reset the form to original values
         setButtonToggle(false); // Disable editing
     };
 
     const editUser = async (data) => {
+        const formData = new FormData();
+
+        // Append text fields
+        formData.append("username", data.username);
+        formData.append("bio", data.bio);
+
+        // Append profile picture if it exists
+        if (data.profilePicture?.[0]) {
+            formData.append("profile_picture", data.profilePicture[0]); // File input
+        }
         try {
-            await instance.put("/edit-user", {
-                username: data.username,
-                bio: data.bio,
+            const response = await instance.put("/edit-user", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             });
-            // Update userData after successful edit
-            setUserData((prev) => ({ ...prev, ...data }));
-            setButtonToggle(false); // Disable editing after saving
+            // Update user data in state after a successful response
+            setUserData(response.data.user);
+            setButtonToggle(false); // Disable editing
         } catch (error) {
             console.error("Error: ", error);
         }
@@ -95,6 +108,28 @@ const Profile = () => {
                         {...register("bio")}
                     />
                     <Form.Text className="text-muted">Optional</Form.Text>
+                </Form.Group>
+
+                <Form.Group controlId="formFile" className="mb-4">
+                    <Form.Label>Profile Picture</Form.Label>
+                    <div className="d-flex align-items-center gap-4">
+                        <Image
+                            src={
+                                !userData?.profile_picture
+                                    ? "/no-profile-picture.webp"
+                                    : `${import.meta.env.VITE_API_URL}/${
+                                          userData.profile_picture
+                                      }`
+                            }
+                            width={150}
+                            roundedCircle
+                        />
+                        <Form.Control
+                            type="file"
+                            disabled={!buttonToggle}
+                            {...register("profilePicture")}
+                        />
+                    </div>
                 </Form.Group>
 
                 <div className="d-flex justify-content-end gap-3">
