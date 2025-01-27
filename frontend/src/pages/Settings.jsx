@@ -1,12 +1,13 @@
 import ListGroup from "react-bootstrap/ListGroup";
-import { Outlet, useLocation, useOutletContext } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import DeleteAccountButton from "@components/buttons/DeleteAccountButton";
 import LogoutButton from "@components/buttons/LogoutButton";
+import { ToastContext } from "@contexts/ToastContext";
+import { useContext } from "react";
 
 const Settings = () => {
     const loc = useLocation();
-    const { setIsLoggedOut, setIsUserUpdated, setIsAccountDeleted } =
-        useOutletContext();
+    const { setIsLoggedOut, setIsAccountDeleted } = useContext(ToastContext);
 
     return (
         <div className="container mt-5">
@@ -37,7 +38,7 @@ const Settings = () => {
                 <div className="col-md-8 col-lg-9">
                     <div className="card shadow-sm border-0">
                         <div className="card-body">
-                            <Outlet context={{ setIsUserUpdated }} />
+                            <Outlet />
                         </div>
                     </div>
                 </div>

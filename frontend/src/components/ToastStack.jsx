@@ -1,14 +1,17 @@
 import ToastTemplate from "@components/templates/ToastTemplate";
+import { ToastContext } from "@contexts/ToastContext";
+import { useContext } from "react";
 import ToastContainer from "react-bootstrap/ToastContainer";
 
-const ToastStack = ({
-    isLoggedOut,
-    setIsLoggedOut,
-    isUserUpdated,
-    setIsUserUpdated,
-    isAccountDeleted,
-    setIsAccountDeleted,
-}) => {
+const ToastStack = () => {
+    const {
+        isLoggedOut,
+        setIsLoggedOut,
+        isUserUpdated,
+        setIsUserUpdated,
+        isAccountDeleted,
+        setIsAccountDeleted,
+    } = useContext(ToastContext);
     return (
         <ToastContainer
             position="bottom-end"

@@ -1,17 +1,17 @@
 import instance from "@utils/axiosConfig";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import Image from "react-bootstrap/Image";
 import Spinner from "react-bootstrap/Spinner";
-import { useOutletContext } from "react-router";
+import { ToastContext } from "@contexts/ToastContext";
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
     const [buttonToggle, setButtonToggle] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { setIsUserUpdated } = useOutletContext();
+    const { setIsUserUpdated } = useContext(ToastContext);
     const {
         register,
         handleSubmit,
