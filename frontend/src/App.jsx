@@ -1,11 +1,14 @@
 import NavBar from "@components/NavBar";
+import ToastStack from "@components/ToastStack";
 import instance from "@utils/axiosConfig";
 import { useEffect, useState } from "react";
-
 import { Outlet, useLocation } from "react-router";
 
 const App = () => {
     const [isAuthorized, setIsAuthorized] = useState(null);
+    const [isLoggedOut, setIsLoggedOut] = useState(null);
+    const [isAccountDeleted, setIsAccountDeleted] = useState(null);
+    const [isUserUpdated, setIsUserUpdated] = useState(null);
     const loc = useLocation();
 
     useEffect(() => {
@@ -36,7 +39,24 @@ const App = () => {
                 <NavBar isAuthorized={isAuthorized} />
             )}
             <div className="container">
-                <Outlet context={{ isAuthorized, setIsAuthorized }} />
+                <Outlet
+                    context={{
+                        isAuthorized,
+                        setIsAuthorized,
+                        setIsLoggedOut,
+                        setIsUserUpdated,
+                        setIsAccountDeleted,
+                    }}
+                />
+
+                <ToastStack
+                    isLoggedOut={isLoggedOut}
+                    setIsLoggedOut={setIsLoggedOut}
+                    isUserUpdated={isUserUpdated}
+                    setIsUserUpdated={setIsUserUpdated}
+                    isAccountDeleted={isAccountDeleted}
+                    setIsAccountDeleted={setIsAccountDeleted}
+                />
             </div>
         </>
     );

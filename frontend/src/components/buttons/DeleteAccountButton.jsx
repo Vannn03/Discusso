@@ -2,9 +2,9 @@ import { useNavigate } from "react-router";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useState } from "react";
 import instance from "@utils/axiosConfig";
-import ModalTemplate from "@components/ModalTemplate";
+import ModalTemplate from "@components/templates/ModalTemplate";
 
-const DeleteAccountButton = () => {
+const DeleteAccountButton = ({ setIsAccountDeleted }) => {
     const nav = useNavigate();
     const [modalShow, setModalShow] = useState(false);
 
@@ -13,8 +13,10 @@ const DeleteAccountButton = () => {
             const response = await instance.delete("/delete-account");
             console.log(response.data.message);
             nav("/");
+            setIsAccountDeleted(true);
         } catch (error) {
             console.error(error.response?.data?.error || "An error occurred");
+            setIsAccountDeleted(false);
         }
     };
 

@@ -5,11 +5,13 @@ import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import Image from "react-bootstrap/Image";
 import Spinner from "react-bootstrap/Spinner";
+import { useOutletContext } from "react-router";
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
     const [buttonToggle, setButtonToggle] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { setIsUserUpdated } = useOutletContext();
     const {
         register,
         handleSubmit,
@@ -73,8 +75,10 @@ const Profile = () => {
             // Update user data in state after a successful response
             setUserData(response.data.user);
             setButtonToggle(false); // Disable editing
+            setIsUserUpdated(true);
         } catch (error) {
             console.error("Error: ", error);
+            setIsUserUpdated(false);
         }
         setLoading(false);
     };

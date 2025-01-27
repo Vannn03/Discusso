@@ -1,10 +1,13 @@
 import ListGroup from "react-bootstrap/ListGroup";
-import { Outlet, useLocation } from "react-router";
+import { Outlet, useLocation, useOutletContext } from "react-router";
 import DeleteAccountButton from "@components/buttons/DeleteAccountButton";
 import LogoutButton from "@components/buttons/LogoutButton";
 
 const Settings = () => {
     const loc = useLocation();
+    const { setIsLoggedOut, setIsUserUpdated, setIsAccountDeleted } =
+        useOutletContext();
+
     return (
         <div className="container mt-5">
             <div className="row">
@@ -22,8 +25,10 @@ const Settings = () => {
                                 >
                                     Profile
                                 </ListGroup.Item>
-                                <LogoutButton />
-                                <DeleteAccountButton />
+                                <LogoutButton setIsLoggedOut={setIsLoggedOut} />
+                                <DeleteAccountButton
+                                    setIsAccountDeleted={setIsAccountDeleted}
+                                />
                             </ListGroup>
                         </div>
                     </div>
@@ -32,7 +37,7 @@ const Settings = () => {
                 <div className="col-md-8 col-lg-9">
                     <div className="card shadow-sm border-0">
                         <div className="card-body">
-                            <Outlet />
+                            <Outlet context={{ setIsUserUpdated }} />
                         </div>
                     </div>
                 </div>
