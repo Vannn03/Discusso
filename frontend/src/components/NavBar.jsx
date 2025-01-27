@@ -51,7 +51,7 @@ const NavBar = ({ isAuthorized }) => {
                                         variant="light"
                                         className="d-flex align-items-center"
                                     >
-                                        <IoSettingsOutline />
+                                        <IoSettingsOutline size={20} />
                                     </Button>
                                 </Link>
                                 <Image

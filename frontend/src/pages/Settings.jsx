@@ -4,6 +4,7 @@ import DeleteAccountButton from "@components/buttons/DeleteAccountButton";
 import LogoutButton from "@components/buttons/LogoutButton";
 import { ToastContext } from "@contexts/ToastContext";
 import { useContext } from "react";
+import { CgProfile } from "react-icons/cg";
 
 const Settings = () => {
     const loc = useLocation();
@@ -22,9 +23,9 @@ const Settings = () => {
                                 <ListGroup.Item
                                     action
                                     href="/settings/profile"
-                                    className="py-3"
+                                    className="py-3 d-flex align-items-center gap-2"
                                 >
-                                    Profile
+                                    <CgProfile size={20} /> Profile
                                 </ListGroup.Item>
                                 <LogoutButton setIsLoggedOut={setIsLoggedOut} />
                                 <DeleteAccountButton

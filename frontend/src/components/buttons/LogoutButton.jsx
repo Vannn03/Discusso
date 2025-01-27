@@ -4,6 +4,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import instance from "@utils/axiosConfig";
 import ModalTemplate from "@components/templates/ModalTemplate";
 import { AuthContext } from "@contexts/AuthContext";
+import { MdOutlineLogout } from "react-icons/md";
 
 const LogoutButton = ({ setIsLoggedOut }) => {
     const nav = useNavigate();
@@ -32,10 +33,10 @@ const LogoutButton = ({ setIsLoggedOut }) => {
         <>
             <ListGroup.Item
                 action
-                className="text-danger"
+                className="text-danger py-3 d-flex align-items-center gap-2"
                 onClick={() => setModalShow(true)}
             >
-                Logout
+                <MdOutlineLogout size={20} /> Logout
             </ListGroup.Item>
             <ModalTemplate
                 show={modalShow} // Ensure show is linked to modalShow state
