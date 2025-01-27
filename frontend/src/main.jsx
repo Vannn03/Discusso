@@ -10,43 +10,49 @@ import Profile from "@components/settings/Profile";
 import {
     ProtectedWrapper,
     UnauthorizedWrapper,
-} from "@components/auth/ProtectedRoute";
+} from "@components/auth/RouteAuth";
 import Settings from "@pages/Settings";
+import { ToastProvider } from "@contexts/ToastContext";
+import { AuthProvider } from "@contexts/AuthContext";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App />}>
-                    <Route
-                        path="/register"
-                        element={
-                            <UnauthorizedWrapper>
-                                <Register />
-                            </UnauthorizedWrapper>
-                        }
-                    />
-                    <Route
-                        path="/login"
-                        element={
-                            <UnauthorizedWrapper>
-                                <Login />
-                            </UnauthorizedWrapper>
-                        }
-                    />
-                    <Route path="/" element={<div>Home Page</div>} />
-                    <Route
-                        path="settings"
-                        element={
-                            <ProtectedWrapper>
-                                <Settings />
-                            </ProtectedWrapper>
-                        }
-                    >
-                        <Route path="profile" element={<Profile />} />
-                    </Route>
-                </Route>
-            </Routes>
-        </BrowserRouter>
+        <AuthProvider>
+            <ToastProvider>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<App />}>
+                            <Route
+                                path="/register"
+                                element={
+                                    <UnauthorizedWrapper>
+                                        <Register />
+                                    </UnauthorizedWrapper>
+                                }
+                            />
+                            <Route
+                                path="/login"
+                                element={
+                                    <UnauthorizedWrapper>
+                                        <Login />
+                                    </UnauthorizedWrapper>
+                                }
+                            />
+                            <Route path="/" element={<div>Home Page</div>} />
+                            <Route
+                                path="settings"
+                                element={
+                                    <ProtectedWrapper>
+                                        <Settings />
+                                    </ProtectedWrapper>
+                                }
+                            >
+                                <Route path="profile" element={<Profile />} />
+                            </Route>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </ToastProvider>
+        </AuthProvider>
     </StrictMode>
 );
