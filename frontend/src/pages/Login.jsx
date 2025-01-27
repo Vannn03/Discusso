@@ -3,9 +3,10 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
-import { useState } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import instance from "@utils/axiosConfig";
+import { AuthContext } from "@contexts/AuthContext";
 
 const Login = () => {
     const nav = useNavigate();
@@ -19,7 +20,7 @@ const Login = () => {
     } = useForm({
         mode: "onTouched", // Validate on blur or touch
     });
-    const { setIsAuthorized } = useOutletContext();
+    const { setIsAuthorized } = useContext(AuthContext);
 
     const loginUser = async (data) => {
         try {

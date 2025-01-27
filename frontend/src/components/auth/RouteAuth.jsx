@@ -1,4 +1,6 @@
-import { Navigate, useOutletContext } from "react-router";
+import { AuthContext } from "@contexts/AuthContext";
+import { useContext } from "react";
+import { Navigate } from "react-router";
 
 // ProtectedRoute for authorized-only pages
 const ProtectedRoute = ({ isAuthorized, children }) => {
@@ -24,7 +26,7 @@ const UnauthorizedRoute = ({ isAuthorized, children }) => {
 
 export const ProtectedWrapper = ({ children }) => {
     // Hooks must be inside the function body of React components
-    const { isAuthorized } = useOutletContext();
+    const { isAuthorized } = useContext(AuthContext);
 
     // Pass the children to the ProtectedRoute
     return (
@@ -33,7 +35,7 @@ export const ProtectedWrapper = ({ children }) => {
 };
 
 export const UnauthorizedWrapper = ({ children }) => {
-    const { isAuthorized } = useOutletContext();
+    const { isAuthorized } = useContext(AuthContext);
 
     // Pass the children to the UnauthorizedRoute
     return (

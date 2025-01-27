@@ -1,14 +1,15 @@
-import { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 import ListGroup from "react-bootstrap/ListGroup";
 import instance from "@utils/axiosConfig";
 import ModalTemplate from "@components/templates/ModalTemplate";
+import { AuthContext } from "@contexts/AuthContext";
 
 const LogoutButton = ({ setIsLoggedOut }) => {
     const nav = useNavigate();
     const [modalShow, setModalShow] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { setIsAuthorized } = useOutletContext();
+    const { setIsAuthorized } = useContext(AuthContext);
 
     const logoutUser = async () => {
         try {
