@@ -21,9 +21,7 @@ const ModalTemplate = ({
             <Modal.Header closeButton>
                 <Modal.Title>{heading}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <p>{description}</p>
-            </Modal.Body>
+            <Modal.Body>{description}</Modal.Body>
             <Modal.Footer>
                 <Button onClick={onHide} variant="outline-secondary">
                     Cancel
