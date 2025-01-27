@@ -42,7 +42,9 @@ const LogoutButton = ({ setIsLoggedOut }) => {
                 onHide={() => setModalShow(false)} // Correctly close the modal
                 do={logoutUser}
                 heading={"Logout"}
-                description={"Are you sure you want to logout?"}
+                description={
+                    "Are you sure you want to logout from your account?"
+                }
                 variant={"danger"}
                 buttonName={"Logout"}
                 loading={loading}

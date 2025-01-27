@@ -62,6 +62,7 @@ const Login = () => {
                                 },
                             })}
                             isInvalid={errors.email ? true : false}
+                            autoFocus
                         />
                         {errors.email && (
                             <Form.Control.Feedback type="invalid">

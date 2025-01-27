@@ -57,6 +57,7 @@ const Register = () => {
                                 required: "Username is required",
                             })}
                             isInvalid={errors.username ? true : false}
+                            autoFocus
                         />
                         {errors.username && (
                             <Form.Control.Feedback type="invalid">
