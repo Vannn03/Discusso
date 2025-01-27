@@ -2,15 +2,16 @@ import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import Spinner from "react-bootstrap/Spinner";
 import { useState } from "react";
-import { Link, useNavigate, useOutletContext } from "react-router";
+import { Link, useNavigate } from "react-router";
 import instance from "@utils/axiosConfig";
 
 const Register = () => {
     const nav = useNavigate();
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const { setIsAuthorized } = useOutletContext();
+    const [loading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -21,17 +22,20 @@ const Register = () => {
 
     const registerUser = async (data) => {
         try {
+            setLoading(true);
             const response = await instance.post("/register", {
                 username: data.username,
                 email: data.email,
                 password: data.password,
             });
             setSuccessMessage(response.data.message);
-            setIsAuthorized(true);
-            nav("/login");
+            setTimeout(() => {
+                nav("/login");
+            }, 2000);
         } catch (error) {
             setErrorMessage(error.response?.data?.error || "An error occurred");
         }
+        setLoading(false);
     };
 
     return (
@@ -115,8 +119,17 @@ const Register = () => {
                         </Alert>
                     )}
 
-                    <Button variant="primary" type="submit" className="mb-3">
-                        Register
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="mb-3"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <Spinner animation="border" size="sm" />
+                        ) : (
+                            "Register"
+                        )}
                     </Button>
 
                     <hr />

@@ -4,10 +4,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import Image from "react-bootstrap/Image";
+import Spinner from "react-bootstrap/Spinner";
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
     const [buttonToggle, setButtonToggle] = useState(false);
+    const [loading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -62,6 +64,7 @@ const Profile = () => {
             formData.append("profile_picture", data.profilePicture[0]); // File input
         }
         try {
+            setLoading(true);
             const response = await instance.put("/edit-user", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -73,6 +76,7 @@ const Profile = () => {
         } catch (error) {
             console.error("Error: ", error);
         }
+        setLoading(false);
     };
 
     return (
@@ -121,8 +125,8 @@ const Profile = () => {
                                           userData.profile_picture
                                       }`
                             }
-                            width={150}
-                            roundedCircle
+                            width={175}
+                            thumbnail
                         />
                         <Form.Control
                             type="file"
@@ -130,6 +134,7 @@ const Profile = () => {
                             {...register("profilePicture")}
                         />
                     </div>
+                    <Form.Text className="text-muted">Optional</Form.Text>
                 </Form.Group>
 
                 <div className="d-flex justify-content-end gap-3">
@@ -141,8 +146,16 @@ const Profile = () => {
                             >
                                 Cancel
                             </Button>
-                            <Button variant="primary" type="submit">
-                                Save
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <Spinner animation="border" size="sm" />
+                                ) : (
+                                    "Save"
+                                )}
                             </Button>
                         </>
                     ) : (

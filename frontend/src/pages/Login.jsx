@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import Spinner from "react-bootstrap/Spinner";
 import { useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router";
 import instance from "@utils/axiosConfig";
@@ -10,6 +11,7 @@ const Login = () => {
     const nav = useNavigate();
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -21,16 +23,20 @@ const Login = () => {
 
     const loginUser = async (data) => {
         try {
+            setLoading(true);
             const response = await instance.post("/login", {
                 email: data.email,
                 password: data.password,
             });
             setSuccessMessage(response.data.message);
-            setIsAuthorized(true);
-            nav("/");
+            setTimeout(() => {
+                setIsAuthorized(true);
+                nav("/");
+            }, 2000);
         } catch (error) {
             setErrorMessage(error.response?.data?.error || "An error occurred");
         }
+        setLoading(false);
     };
 
     return (
@@ -96,8 +102,17 @@ const Login = () => {
                         </Alert>
                     )}
 
-                    <Button variant="primary" type="submit" className="mb-3">
-                        Login
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        className="mb-3"
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <Spinner animation="border" size="sm" />
+                        ) : (
+                            "Login"
+                        )}
                     </Button>
 
                     <hr />

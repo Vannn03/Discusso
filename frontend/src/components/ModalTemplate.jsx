@@ -1,5 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Spinner from "react-bootstrap/Spinner";
 
 const ModalTemplate = ({
     show,
@@ -9,6 +10,7 @@ const ModalTemplate = ({
     do: action,
     variant,
     buttonName,
+    loading,
 }) => {
     return (
         <Modal
@@ -31,8 +33,12 @@ const ModalTemplate = ({
                 <Button onClick={onHide} variant="secondary">
                     Cancel
                 </Button>
-                <Button onClick={action} variant={variant}>
-                    {buttonName}
+                <Button onClick={action} variant={variant} disabled={loading}>
+                    {loading ? (
+                        <Spinner animation="border" size="sm" />
+                    ) : (
+                        buttonName
+                    )}
                 </Button>
             </Modal.Footer>
         </Modal>
